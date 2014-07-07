@@ -42,7 +42,10 @@ And you want to send a different structure to your data warehouse in the format 
   order: 'STORE-1234',
   items: [
     { name: 'ACD', sku: '1234' }
-  ]
+  ],
+  customer: {
+    score: 10
+  }
 }
 
 ```
