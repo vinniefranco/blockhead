@@ -1,14 +1,21 @@
 module Blockhead
   module Extractors
     class Abstract
-      def initialize(value, *args, proc)
-        @value = value
+      attr_writer :next
+      attr_reader :object
+
+      def initialize(object, *args, proc)
+        @object = object
         @args = args
         @proc = proc
       end
 
-      def next=(extractor)
-        @next = extractor
+      def valid?
+        fail '#valid? not implemented'
+      end
+
+      def extract_value
+        fail '#extract_value not implemented'
       end
 
       def extract

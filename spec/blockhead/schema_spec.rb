@@ -30,8 +30,9 @@ describe Blockhead::Schema, '::define' do
         end
       end
     end
+    result = { nested_obj: { sku: '4321', price: { base: 1200 } } }
 
-    expect(schema.marshal).to eq nested_obj: {sku: '4321', price: {base: 1200}}
+    expect(schema.marshal).to eq result
   end
 
   it 'returns a hash' do
@@ -70,7 +71,7 @@ describe Blockhead::Schema, '::define' do
 
   it 'accepts procs' do
     schema = schema_with do
-      summary ->{ "#{object.title} #{object.description}" }
+      summary -> { "#{object.title} #{object.description}" }
     end
 
     expect(schema.marshal).to eq summary: 'Title Description'
@@ -85,8 +86,9 @@ describe Blockhead::Schema, '::define' do
         end
       end
     end
+    result = { nested_obj: { sku: '4321', price: { base: 1200 } } }
 
-    expect(schema.marshal).to eq nested_obj: {sku: '4321', price: {base: 1200}}
+    expect(schema.marshal).to eq result
   end
 
   it 'handles nested objects with aliases' do
@@ -99,7 +101,7 @@ describe Blockhead::Schema, '::define' do
       end
     end
 
-    expect(schema.marshal).to eq cart: {sku: '4321', price: {cost: 1200}}
+    expect(schema.marshal).to eq cart: { sku: '4321', price: { cost: 1200 } }
   end
 
   it 'handles collections of objects' do
@@ -109,9 +111,8 @@ describe Blockhead::Schema, '::define' do
       end
     end
 
-    expect(schema.marshal).to eq cart: [{sku: '1234'}]
+    expect(schema.marshal).to eq cart: [{ sku: '1234' }]
   end
-
 
   def schema_with(&block)
     Blockhead::Schema.define(Tester.new, &block)

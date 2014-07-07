@@ -6,7 +6,7 @@ module Blockhead
       end
 
       def extract_value
-        @value
+        @object
       end
     end
   end

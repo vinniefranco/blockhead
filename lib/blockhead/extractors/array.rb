@@ -2,11 +2,11 @@ module Blockhead
   module Extractors
     class Array < Abstract
       def valid?
-        @proc && @value.is_a?(::Array)
+        @proc && @object.is_a?(::Array)
       end
 
       def extract_value
-        @value.map { |obj| Schema.define(obj, &@proc).marshal }
+        @object.map { |obj| Schema.define(obj, &@proc).marshal }
       end
     end
   end

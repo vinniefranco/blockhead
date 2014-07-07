@@ -8,7 +8,7 @@ module Blockhead
     end
 
     def key
-      if has_options?
+      if options?
         options[:as]
       else
         default
@@ -17,7 +17,7 @@ module Blockhead
 
     private
 
-    def has_options?
+    def options?
       options.is_a?(Hash)
     end
   end

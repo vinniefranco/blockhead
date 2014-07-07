@@ -11,7 +11,7 @@ module Blockhead
     end
 
     def define(&block)
-      raise 'No schema definition' unless block
+      fail 'No schema definition' unless block
       schema = Marshaller.new(object)
       schema.instance_eval(&block) 
 
