@@ -1,6 +1,6 @@
 # Blockhead
 
-TODO: Write a gem description
+Easy marshalling of object attributes.
 
 ## Installation
 

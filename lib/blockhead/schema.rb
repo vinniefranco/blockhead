@@ -1,37 +1,4 @@
 module Blockhead
-  class Marshaller < BasicObject
-    def initialize(object)
-      @attributes = {}
-      @object = object
-    end
-
-    attr_reader :attributes, :object
-
-    def marshal
-      attributes
-    end
-
-    def _delegate(name)
-      if object.respond_to?(name)
-        object.send name
-      else
-        nil
-      end
-    end
-
-    def method_missing(name, *args, &block)
-      case args.first
-      when ::Hash
-        attr = args.first[:as]
-      else
-        attr = name
-      end
-
-      result = _delegate(name)
-
-      attributes[attr] = ValueExtractor.new(result, *args, &block).extract
-    end
-  end
   class Schema
     attr_reader :object
 
