@@ -19,21 +19,12 @@ describe Blockhead::Schema, '::define' do
     def nested_obj
       OpenStruct.new(sku: '4321', price: OpenStruct.new(base: 1200))
     end
-  end
 
-  it 'handles nested objects' do
-    schema = schema_with do
-      nested_obj do
-        sku
-        price do
-          base
-        end
-      end
+    def empty_array
+      []
     end
-    result = { nested_obj: { sku: '4321', price: { base: 1200 } } }
-
-    expect(schema.marshal).to eq result
   end
+
 
   it 'returns a hash' do
     schema = schema_with { title }
@@ -112,6 +103,15 @@ describe Blockhead::Schema, '::define' do
     end
 
     expect(schema.marshal).to eq cart: [{ sku: '1234' }]
+  end
+
+  it 'handles empty collections' do
+    schema = schema_with do
+      title
+      empty_array
+    end
+
+    expect(schema.marshal).to eq title: 'Title', empty_array: []
   end
 
   def schema_with(&block)

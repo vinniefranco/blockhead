@@ -6,7 +6,7 @@ module Blockhead
       end
 
       def extract_value
-        Schema.define(@object, &@proc).marshal
+        Schema.define(object, &@proc).marshal
       end
     end
   end

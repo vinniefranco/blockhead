@@ -13,7 +13,7 @@ module Blockhead
     def define(&block)
       fail 'No schema definition' unless block
       schema = Marshaller.new(object)
-      schema.instance_eval(&block) 
+      schema.instance_eval(&block)
 
       schema
     end

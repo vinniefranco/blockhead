@@ -18,12 +18,10 @@ describe Blockhead::Extractors::Array, '#valid?' do
 end
 
 describe Blockhead::Extractors::Array, '#extract_value' do
-  xit 'passes elements in value to Schema with @proc' do
+  it 'passes elements in value to Schema with @proc' do
     item = double(title: 'Foo')
-    proc = -> { title }
-    extractor = Blockhead::Extractors::Array.new([item], [], proc)
+    extractor = Blockhead::Extractors::Array.new([item], [], Proc.new { title })
 
-    expect(Blockhead::Schema).to receive(:define).with(item)
-    extractor.extract_value
+    expect(extractor.extract_value).to eq [{ title: 'Foo' }]
   end
 end
