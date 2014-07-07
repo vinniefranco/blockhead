@@ -11,7 +11,7 @@ module Blockhead
       attributes
     end
 
-    def _delegate(name, *args)
+    def _delegate(name)
       if object.respond_to?(name)
         object.send name
       else
@@ -23,16 +23,13 @@ module Blockhead
       case args.first
       when ::Hash
         attr = args.first[:as]
-      when ::Proc
-        return attributes[name] = args.first.call
       else
         attr = name
       end
 
-      attributes[attr] = _delegate(name, *args)
-      if block
-        attributes[attr] = Schema.define(attributes[attr], &block).marshal
-      end
+      result = _delegate(name)
+
+      attributes[attr] = ValueExtractor.new(result, *args, &block).extract
     end
   end
   class Schema
@@ -47,7 +44,7 @@ module Blockhead
     end
 
     def define(&block)
-      raise 'No schema definition' unless block_given?
+      raise 'No schema definition' unless block
       schema = Marshaller.new(object)
       schema.instance_eval(&block) 
 

@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'debugger'
 require 'ostruct'
 
 describe Blockhead::Schema, '::define' do
@@ -18,6 +19,19 @@ describe Blockhead::Schema, '::define' do
     def nested_obj
       OpenStruct.new(sku: '4321', price: OpenStruct.new(base: 1200))
     end
+  end
+
+  it 'handles nested objects' do
+    schema = schema_with do
+      nested_obj do
+        sku
+        price do
+          base
+        end
+      end
+    end
+
+    expect(schema.marshal).to eq nested_obj: {sku: '4321', price: {base: 1200}}
   end
 
   it 'returns a hash' do
@@ -86,6 +100,16 @@ describe Blockhead::Schema, '::define' do
     end
 
     expect(schema.marshal).to eq cart: {sku: '4321', price: {cost: 1200}}
+  end
+
+  it 'handles collections of objects' do
+    schema = schema_with do
+      nested_array as: :cart do
+        sku
+      end
+    end
+
+    expect(schema.marshal).to eq cart: [{sku: '1234'}]
   end
 
 
