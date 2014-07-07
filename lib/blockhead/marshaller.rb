@@ -12,7 +12,7 @@ module Blockhead
     end
 
     def method_missing(name, *args, &block)
-      key = KeyExtractor.new(name, *args).extract
+      key = OptionKey.new(name, args.first).key
       value = _call(name)
 
       attributes[key] = ValueExtractor.new(value, *args, &block).extract
