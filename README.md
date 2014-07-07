@@ -18,11 +18,58 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Say you have the following object with a 1:1 and a 1:M set of relational attributes:
+
+```ruby
+
+object = OpenStruct.new(
+  title: 'Fancy pants',
+  order_number: 'STORE-1234'
+  items: [
+    OpenStruct.new(name: 'ACD', sku: '1234', ...),
+  ]
+  customer: OpenStruct.new(name: 'Bill Murray', score: 10, ...)
+)
+
+```
+
+And you want to send a different structure to your data warehouse in the format of:
+
+```ruby
+
+{
+  name: 'Bill Murray',
+  order: 'STORE-1234',
+  items: [
+    { name: 'ACD', sku: '1234' }
+  ]
+}
+
+```
+
+To marshal you would just:
+
+```ruby
+
+schema = Blockhead::Schema.define object do
+  name -> { object.customer.name } # Accepts procs with object in scope
+  order_number as: :order # Aliases
+  items do
+    name # Simple definitions on collection attributes
+    sku
+  end
+  customer do
+    score
+  end
+end
+
+schema.marshal #=> { name: 'Bill Murray', order: 'STORE-1234', items: [{ name: 'ACD', sku: '1234' }], customer: { score: 10 } }
+
+```
 
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/blockhead/fork )
+1. Fork it ( https://github.com/vinniefranco/blockhead/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
