@@ -1,5 +1,7 @@
 # Blockhead
 
+[![Build Status](https://travis-ci.org/vinniefranco/blockhead.svg)](https://travis-ci.org/vinniefranco/blockhead.svg)
+
 Easy marshalling of object attributes.
 
 ## Installation
