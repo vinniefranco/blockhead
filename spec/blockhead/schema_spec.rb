@@ -25,7 +25,6 @@ describe Blockhead::Schema, '::define' do
     end
   end
 
-
   it 'returns a hash' do
     schema = schema_with { title }
 
@@ -49,6 +48,18 @@ describe Blockhead::Schema, '::define' do
     end
     response = { title: 'Title', description: 'Description', not_found: nil }
     expect(schema.marshal).to eq response
+  end
+
+  it 'handles nested nils' do
+    schema = schema_with do
+      nope do
+        more_nope do
+          still_nope
+        end
+      end
+    end
+
+    expect(schema.marshal).to eq  nope: { more_nope: { still_nope: nil } }
   end
 
   it 'accepts hash aliases' do
