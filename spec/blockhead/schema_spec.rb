@@ -50,6 +50,49 @@ describe Blockhead::Schema, '::define' do
     expect(schema.marshal).to eq response
   end
 
+  it 'handles wrappers' do
+    schema = schema_with do
+      surprise :wrap do
+        title
+        description
+      end
+    end
+
+    response = { surprise: { title: 'Title', description: 'Description' } }
+    expect(schema.marshal).to eq response
+  end
+
+  it 'handles nested wrappers' do
+    schema = schema_with do
+      a :wrap do
+        b :wrap do
+          title
+          description
+        end
+      end
+    end
+
+    response = { a: { b: { title: 'Title', description: 'Description' } } }
+    expect(schema.marshal).to eq response
+  end
+
+  it 'handles wrappers around nested objects' do
+    schema = schema_with do
+      a :wrap do
+        title
+      end
+      nested_obj do
+        item :wrap do
+          sku
+        end
+      end
+    end
+
+    response = { a: { title: 'Title'}, nested_obj: { item: { sku: '4321' } } }
+    expect(schema.marshal).to eq response
+  end
+
+
   it 'handles nested nils' do
     schema = schema_with do
       nope do
