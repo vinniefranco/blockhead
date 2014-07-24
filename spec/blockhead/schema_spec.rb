@@ -50,6 +50,16 @@ describe Blockhead::Schema, '::define' do
     expect(schema.marshal).to eq response
   end
 
+  it 'handles :id when nil responds to id (Rails)' do
+    allow(nil).to receive(:respond_to?).with(:id).and_return(true)
+
+    schema = Blockhead::Schema.define nil do
+      id
+    end
+
+    expect(schema.marshal).to eq(id: nil)
+  end
+
   it 'handles wrappers' do
     schema = schema_with do
       surprise :wrap do

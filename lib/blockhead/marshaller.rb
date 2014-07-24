@@ -22,9 +22,13 @@ module Blockhead
     def _call(name)
       if @arg == :wrap
         object
-      elsif object.respond_to?(name)
+      elsif valid_message?(name)
         object.send name
       end
+    end
+
+    def valid_message?(name)
+      object.respond_to?(name) && !object.nil? # nil responds to :id in Rails.
     end
   end
 end
