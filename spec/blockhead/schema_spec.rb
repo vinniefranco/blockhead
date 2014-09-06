@@ -124,6 +124,14 @@ describe Blockhead::Schema, '::define' do
     expect(schema.marshal).to eq 'header' => 'Title', 'body' => 'Description'
   end
 
+  it 'raises AliasOptionException on nil aliases' do
+    expect {
+      schema_with do
+        title as: header
+      end
+    }.to raise_error
+  end
+
   it 'accepts procs' do
     schema = schema_with do
       summary -> { "#{object.title} #{object.description}" }

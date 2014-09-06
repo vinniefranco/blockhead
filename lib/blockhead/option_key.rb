@@ -8,6 +8,14 @@ module Blockhead
     end
 
     def key
+      key = extract_key
+      raise AliasOptionException unless key
+      key
+    end
+
+    private
+
+    def extract_key
       if options?
         options[:as]
       else
@@ -15,10 +23,11 @@ module Blockhead
       end
     end
 
-    private
-
     def options?
       options.is_a?(Hash)
     end
   end
+end
+
+class AliasOptionException < Exception
 end
