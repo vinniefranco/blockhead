@@ -2,6 +2,29 @@ require 'spec_helper'
 require 'debugger'
 require 'ostruct'
 
+describe Blockhead, '#config' do
+  class MessyObject
+    def title
+      "  title stuffs \n"
+    end
+
+    def foo
+      12
+    end
+  end
+
+  it 'prettifies object attributes that are string values' do
+    Blockhead.configure do |config|
+      config.pretty_print = true
+    end
+
+    schema = Blockhead::Schema.define MessyObject.new do
+      title
+    end.marshal 
+    expect(schema[:title]).to eq 'Title Stuffs'
+  end
+end
+
 describe Blockhead::Schema, '::define' do
   class Tester
     def title
