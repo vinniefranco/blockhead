@@ -129,7 +129,7 @@ describe Blockhead::Schema, '::define' do
       schema_with do
         title as: header
       end
-    }.to raise_error
+    }.to raise_error TypeError, 'Aliases cannot be nil'
   end
 
   it 'accepts procs' do

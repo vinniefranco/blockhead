@@ -9,7 +9,7 @@ module Blockhead
 
     def key
       key = extract_key
-      raise AliasOptionException unless key
+      raise TypeError, 'Aliases cannot be nil' unless key
       key
     end
 
@@ -27,7 +27,4 @@ module Blockhead
       options.is_a?(Hash)
     end
   end
-end
-
-class AliasOptionException < Exception
 end
