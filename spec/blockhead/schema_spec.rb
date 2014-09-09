@@ -2,29 +2,6 @@ require 'spec_helper'
 require 'debugger'
 require 'ostruct'
 
-describe Blockhead, '#config' do
-  class MessyObject
-    def title
-      "  title stuffs \n"
-    end
-
-    def foo
-      12
-    end
-  end
-
-  it 'prettifies object attributes that are string values' do
-    Blockhead.configure do |config|
-      config.pretty_print = true
-    end
-
-    schema = Blockhead::Schema.define MessyObject.new do
-      title
-    end.marshal 
-    expect(schema[:title]).to eq 'Title Stuffs'
-  end
-end
-
 describe Blockhead::Schema, '::define' do
   class Tester
     def title
@@ -45,6 +22,16 @@ describe Blockhead::Schema, '::define' do
 
     def empty_array
       []
+    end
+  end
+
+  class BadFormatting
+    def title
+      " title and things\r\n  "
+    end
+
+    def another_field
+      " another thing \n"
     end
   end
 
@@ -147,7 +134,7 @@ describe Blockhead::Schema, '::define' do
     expect(schema.marshal).to eq 'header' => 'Title', 'body' => 'Description'
   end
 
-  it 'raises AliasOptionException on nil aliases' do
+  it 'raises TypeError on nil aliases' do
     expect {
       schema_with do
         title as: header
@@ -175,6 +162,18 @@ describe Blockhead::Schema, '::define' do
     result = { nested_obj: { sku: '4321', price: { base: 1200 } } }
 
     expect(schema.marshal).to eq result
+  end
+
+  it 'cleans fields when passed :cleanup' do
+    schema = schema_with(BadFormatting) do
+      title :pretty_print
+      another_field
+    end.marshal
+
+    expect(schema).to eq(
+      title: 'Title And Things',
+      another_field: " another thing \n"
+    )
   end
 
   it 'handles nested objects with aliases' do
@@ -209,7 +208,7 @@ describe Blockhead::Schema, '::define' do
     expect(schema.marshal).to eq title: 'Title', empty_array: []
   end
 
-  def schema_with(&block)
-    Blockhead::Schema.define(Tester.new, &block)
+  def schema_with(klass = Tester, &block)
+    Blockhead::Schema.define(klass.new, &block)
   end
 end

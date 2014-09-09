@@ -12,15 +12,11 @@ module Blockhead
       private
 
       def value
-        if object.is_a?(String) && Blockhead.pretty_print
-          pretty
+        if object.is_a?(String) && args.first == :pretty_print
+          object.split(/ |\_/).map(&:capitalize).join(' ').strip
         else
           object
         end
-      end
-
-      def pretty
-        object.split(/ |\_/).map(&:capitalize).join(' ').strip
       end
     end
   end

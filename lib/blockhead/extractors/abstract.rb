@@ -25,6 +25,10 @@ module Blockhead
           @next.extract
         end
       end
+
+      protected
+
+      attr_reader :args
     end
   end
 end
