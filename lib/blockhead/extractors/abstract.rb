@@ -4,9 +4,9 @@ module Blockhead
       attr_writer :next
       attr_reader :object
 
-      def initialize(object, *args, proc)
+      def initialize(object, arg, proc)
         @object = object
-        @args = args
+        @arg = arg
         @proc = proc
       end
 
@@ -28,7 +28,7 @@ module Blockhead
 
       protected
 
-      attr_reader :args
+      attr_reader :arg, :proc
     end
   end
 end

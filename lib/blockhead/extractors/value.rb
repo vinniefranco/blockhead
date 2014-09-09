@@ -12,11 +12,19 @@ module Blockhead
       private
 
       def value
-        if object.is_a?(String) && args.first == :pretty_print
-          object.split(/ |\_/).map(&:capitalize).join(' ').strip
+        if arg.is_a?(Hash) && arg[:with]
+          send(:"#{modifier}_modifier")
         else
           object
         end
+      end
+
+      def modifier
+        arg[:with]
+      end
+
+      def pretty_print_modifier
+        object.split(/ |\_/).map(&:capitalize).join(' ').strip
       end
     end
   end

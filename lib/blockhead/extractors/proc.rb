@@ -8,12 +8,6 @@ module Blockhead
       def extract_value
         arg.call
       end
-
-      private
-
-      def arg
-        @args.first
-      end
     end
   end
 end

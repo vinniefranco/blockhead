@@ -134,12 +134,12 @@ describe Blockhead::Schema, '::define' do
     expect(schema.marshal).to eq 'header' => 'Title', 'body' => 'Description'
   end
 
-  it 'raises TypeError on nil aliases' do
+  it 'raises TypeError on non symbol aliases' do
     expect {
       schema_with do
         title as: header
       end
-    }.to raise_error TypeError, 'Aliases cannot be nil'
+    }.to raise_error TypeError, 'Aliase is not of expected type'
   end
 
   it 'accepts procs' do
@@ -164,9 +164,9 @@ describe Blockhead::Schema, '::define' do
     expect(schema.marshal).to eq result
   end
 
-  it 'cleans fields when passed :cleanup' do
+  it 'cleans fields when passed with: :pretty_print' do
     schema = schema_with(BadFormatting) do
-      title :pretty_print
+      title with: :pretty_print
       another_field
     end.marshal
 
@@ -174,6 +174,14 @@ describe Blockhead::Schema, '::define' do
       title: 'Title And Things',
       another_field: " another thing \n"
     )
+  end
+
+  it 'allows multiple options on a field' do
+    schema = schema_with(BadFormatting) do
+      title with: :pretty_print, as: :alias
+    end.marshal
+
+    expect(schema).to eq alias: 'Title And Things'
   end
 
   it 'handles nested objects with aliases' do

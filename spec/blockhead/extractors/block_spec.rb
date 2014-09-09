@@ -14,5 +14,5 @@ end
 
 def block_factory
   object = double('poro', title: 'This')
-  Blockhead::Extractors::Block.new object, [], Proc.new { title }
+  Blockhead::Extractors::Block.new object, nil, Proc.new { title }
 end

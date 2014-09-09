@@ -2,12 +2,12 @@ module Blockhead
   class ValueExtractor
     attr_reader :extractor
 
-    def initialize(value, *args, &block)
+    def initialize(value, arg, &block)
       proc = block.to_proc if block
-      @extractor = Extractors::Enumerable.new value, *args, proc
+      @extractor = Extractors::Enumerable.new value, arg, proc
 
       extractors.inject(extractor) do |fallback, link|
-        fallback.next = link.new value, *args, proc
+        fallback.next = link.new value, arg, proc
       end
     end
 

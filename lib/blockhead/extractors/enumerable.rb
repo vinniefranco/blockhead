@@ -2,11 +2,11 @@ module Blockhead
   module Extractors
     class Enumerable < Abstract
       def valid?
-        @proc && safe_enumerable?
+        proc && safe_enumerable?
       end
 
       def extract_value
-        object.map { |obj| Block.new(obj, [], @proc).extract_value }
+        object.map { |obj| Block.new(obj, [], proc).extract_value }
       end
 
       private

@@ -26,5 +26,5 @@ describe Blockhead::Extractors::Enumerable, '#extract_value' do
 end
 
 def enum_factory(object, proc = nil)
-  Blockhead::Extractors::Enumerable.new(object, [], proc)
+  Blockhead::Extractors::Enumerable.new(object, nil, proc)
 end
