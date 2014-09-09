@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/vinniefranco/blockhead.svg)](https://travis-ci.org/vinniefranco/blockhead.svg)
 [![Code Climate](https://codeclimate.com/github/vinniefranco/blockhead.png)](https://codeclimate.com/github/vinniefranco/blockhead.png)
+[![Gem Version](https://badge.fury.io/rb/blockhead.svg)](http://badge.fury.io/rb/blockhead)
 Easy marshalling of object attributes.
 
 ## Installation
