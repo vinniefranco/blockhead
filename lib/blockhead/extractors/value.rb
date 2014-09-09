@@ -12,7 +12,7 @@ module Blockhead
       private
 
       def value
-        if arg.is_a?(Hash) && arg[:with]
+        if arg.is_a?(Hash) && object.is_a?(String) && modifier
           send(:"#{modifier}_modifier")
         else
           object
