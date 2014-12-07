@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Blockhead::Extractors::Enumerable, '#valid?' do
   it 'is valid with a @proc and a array @value' do
-    extractor = enum_factory([], Proc.new { 'Test.'})
+    extractor = enum_factory([], Proc.new { 'Test.' })
     expect(extractor).to be_valid
   end
 

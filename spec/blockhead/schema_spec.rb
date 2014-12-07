@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'debugger'
 require 'ostruct'
 
 describe Blockhead::Schema, '::define' do
@@ -108,10 +107,9 @@ describe Blockhead::Schema, '::define' do
       end
     end
 
-    response = { a: { title: 'Title'}, nested_obj: { item: { sku: '4321' } } }
+    response = { a: { title: 'Title' }, nested_obj: { item: { sku: '4321' } } }
     expect(schema.marshal).to eq response
   end
-
 
   it 'handles nested nils' do
     schema = schema_with do
@@ -122,7 +120,7 @@ describe Blockhead::Schema, '::define' do
       end
     end
 
-    expect(schema.marshal).to eq  nope: { more_nope: { still_nope: nil } }
+    expect(schema.marshal).to eq nope: { more_nope: { still_nope: nil } }
   end
 
   it 'accepts hash aliases' do
@@ -135,11 +133,9 @@ describe Blockhead::Schema, '::define' do
   end
 
   it 'raises TypeError on non symbol aliases' do
-    expect {
-      schema_with do
-        title as: header
-      end
-    }.to raise_error TypeError, 'Aliase is not of expected type'
+    expect do
+      schema_with { title as: header }
+    end.to raise_error TypeError, 'Alias is not of expected type'
   end
 
   it 'accepts procs' do

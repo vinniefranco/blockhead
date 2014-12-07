@@ -16,7 +16,7 @@ describe Blockhead::Extractors::Value, '#extract_value' do
   it 'cleans up strings when passed with: :pretty_print' do
     extractor = Blockhead::Extractors::Value.new(
       "This is Crazy \n",
-      {with: :pretty_print},
+      { with: :pretty_print },
       nil
     )
 

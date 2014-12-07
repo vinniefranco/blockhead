@@ -1,7 +1,7 @@
 require 'blockhead/version'
 require 'blockhead/schema'
 require 'blockhead/marshaller'
-require 'blockhead/option_key'
+require 'blockhead/alias_key'
 require 'blockhead/value_extractor'
 require 'blockhead/extractors/abstract'
 require 'blockhead/extractors/block'
