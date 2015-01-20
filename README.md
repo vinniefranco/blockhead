@@ -21,7 +21,7 @@ Or install it yourself as:
 
 ## Usage
 
-Say you have the following object with a 1:1 and a 1:M set of relational attributes:
+Say you have the following object with some 1:1 and 1:M set of relational attributes:
 
 ```ruby
 
